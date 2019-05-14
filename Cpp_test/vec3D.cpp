@@ -1,14 +1,14 @@
 #include <iostream>
 using namespace std;
+typedef double vec_ele;
 
 class vec3D{
     private:
-        typedef double vec_ele;
         vec_ele* addr;
     public:
         vec3D();
         vec3D(vec_ele v1, vec_ele v2, vec_ele v3);
-        //~vec3D();
+        ~vec3D();
         vec_ele x();
         vec_ele y();
         vec_ele z();
@@ -21,6 +21,7 @@ int main()
     vec3D v1(1, 2, 3);
     v1.print();
     cout << "\n";
+    cout << "\n" << v1.z() << "\n";
     return 0;
 }
 
@@ -35,6 +36,22 @@ vec3D::vec3D(vec_ele v1, vec_ele v2, vec_ele v3){
     addr[1] = v2;
     addr[2] = v3;
 };
+
+vec3D::~vec3D(){
+    delete [] addr;
+}
+
+vec_ele vec3D::x(){
+    return addr[0];
+}
+
+vec_ele vec3D::y(){
+    return addr[1];
+}
+
+vec_ele vec3D::z(){
+    return addr[2];
+}
 
 void vec3D::print(){
     cout << "\n(";
