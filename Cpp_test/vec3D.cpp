@@ -13,14 +13,15 @@ class vec3D{
         vec_ele y();
         vec_ele z();
         void print();
+        
 
 };
 
 int main()
 {
     vec3D v1(1, 2, 3);
+    //v1 = vec3D(4, 5, 6);
     v1.print();
-    cout << "\n";
     cout << "\n" << v1.z() << "\n";
     return 0;
 }
@@ -55,7 +56,7 @@ vec_ele vec3D::z(){
 
 void vec3D::print(){
     cout << "\n(";
-    cout << addr[0];
-    for(int i = 2; i <= 3; i++) cout << ", " << addr[i-1];
+    cout << this -> addr[0];
+    for(int i = 2; i <= 3; i++) cout << ", " << this -> addr[i-1];
     cout << ")\n";
 };
