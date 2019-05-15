@@ -14,12 +14,15 @@ class vec3D{
         void print() const;
         
         vec_ele operator[](int i) const;
+        vec_ele& operator[](int i);
 };
 
 int main()
 {
     vec3D v1(1, 2, 3);
     vec3D v2(v1);
+    v2.print();
+    v2[2] = 6;
     v2.print();
     cout << "\n" << v2[2] << "\n";
     return 0;
@@ -44,6 +47,10 @@ vec3D::vec3D(const vec3D& v){
 
 vec_ele vec3D::operator[](int i) const{
     //if(i < 0 || i >= 3) exit(1);
+    return addr[i];
+};
+
+vec_ele& vec3D::operator[](int i){
     return addr[i];
 };
 
