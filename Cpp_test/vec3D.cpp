@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <cstlib>
 using namespace std;
 typedef double vec_ele;
 
@@ -8,21 +9,19 @@ class vec3D{
     public:
         vec3D();
         vec3D(vec_ele v1, vec_ele v2, vec_ele v3);
+        vec3D(const vec3D& v);
         ~vec3D();
-        vec_ele x();
-        vec_ele y();
-        vec_ele z();
-        void print();
+        void print() const;
         
-
+        vec_ele operator[](int i) const;
 };
 
 int main()
 {
     vec3D v1(1, 2, 3);
-    //v1 = vec3D(4, 5, 6);
-    v1.print();
-    cout << "\n" << v1.z() << "\n";
+    vec3D v2(v1);
+    v2.print();
+    cout << "\n" << v2[2] << "\n";
     return 0;
 }
 
@@ -38,23 +37,21 @@ vec3D::vec3D(vec_ele v1, vec_ele v2, vec_ele v3){
     addr[2] = v3;
 };
 
+vec3D::vec3D(const vec3D& v){
+    addr = new vec_ele[3];
+    for(int i = 0; i < 3; i++)  addr[i] = v[i];
+};
+
+vec_ele vec3D::operator[](int i) const{
+    //if(i < 0 || i >= 3) exit(1);
+    return addr[i];
+};
+
 vec3D::~vec3D(){
     delete [] addr;
 }
 
-vec_ele vec3D::x(){
-    return addr[0];
-}
-
-vec_ele vec3D::y(){
-    return addr[1];
-}
-
-vec_ele vec3D::z(){
-    return addr[2];
-}
-
-void vec3D::print(){
+void vec3D::print() const{
     cout << "\n(";
     cout << this -> addr[0];
     for(int i = 2; i <= 3; i++) cout << ", " << this -> addr[i-1];
