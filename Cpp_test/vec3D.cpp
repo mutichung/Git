@@ -13,18 +13,21 @@ class vec3D{
         ~vec3D();
         void print() const;
         
+        
         vec_ele operator[](int i) const;
         vec_ele& operator[](int i);
+        void operator()(vec_ele x, vec_ele y, vec_ele z);
+        void operator=(const vec3D& v);
 };
 
 int main()
 {
     vec3D v1(1, 2, 3);
-    vec3D v2(v1);
+    vec3D v2 = v1;
     v2.print();
-    v2[2] = 6;
+    v2(3, 5, 4);
     v2.print();
-    cout << "\n" << v2[2] << "\n";
+    cout << "\n" << v2[1] << "\n";
     return 0;
 }
 
@@ -54,9 +57,19 @@ vec_ele& vec3D::operator[](int i){
     return addr[i];
 };
 
+void vec3D::operator=(const vec3D& v){
+    for(int i = 0; i <= 2; i++) this->addr[i] = v.addr[i];
+};
+
+void vec3D::operator()(vec_ele x, vec_ele y, vec_ele z){
+    this->addr[0] = x;
+    this->addr[1] = y;
+    this->addr[2] = z;
+};
+
 vec3D::~vec3D(){
     delete [] addr;
-}
+};
 
 void vec3D::print() const{
     cout << "\n(";
