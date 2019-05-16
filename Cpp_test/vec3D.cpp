@@ -13,10 +13,10 @@ class vec3D{
         ~vec3D();
         void print() const;
         
-        
         vec_ele operator[](int i) const;
         vec_ele& operator[](int i);
         void operator()(vec_ele x, vec_ele y, vec_ele z);
+        void operator()(vec_ele v[3]);
         void operator=(const vec3D& v);
 };
 
@@ -65,6 +65,10 @@ void vec3D::operator()(vec_ele x, vec_ele y, vec_ele z){
     this->addr[0] = x;
     this->addr[1] = y;
     this->addr[2] = z;
+};
+
+void vec3D::operator()(vec_ele v[3]){
+
 };
 
 vec3D::~vec3D(){
