@@ -1,5 +1,6 @@
 #include <iostream>
 //#include <cstlib>
+#include <cmath>
 using namespace std;
 typedef double vec_ele;
 
@@ -11,23 +12,27 @@ class vec3D{
         vec3D(vec_ele v1, vec_ele v2, vec_ele v3);
         vec3D(const vec3D& v);
         ~vec3D();
-        void print() const;
         
         vec_ele operator[](int i) const;
         vec_ele& operator[](int i);
         void operator()(vec_ele x, vec_ele y, vec_ele z);
-        void operator()(vec_ele v[3]);
         void operator=(const vec3D& v);
+        
+        void print() const;
+
+        vec3D cross(const vec3D& v) const;
+        double dot(const vec3D& v) const;
+        
 };
 
 int main()
 {
-    vec3D v1(1, 2, 3);
-    vec3D v2 = v1;
-    v2.print();
-    v2(3, 5, 4);
-    v2.print();
-    cout << "\n" << v2[1] << "\n";
+    vec3D v1(1, 0, 0);
+    vec3D v2(0, 1, 0);
+    double ip = v1.dot(v2);
+    vec3D v3 = v2.cross(v2);
+    v3.print();
+    cout << ip << "\n";
     return 0;
 }
 
@@ -48,6 +53,10 @@ vec3D::vec3D(const vec3D& v){
     for(int i = 0; i < 3; i++)  addr[i] = v[i];
 };
 
+vec3D::~vec3D(){
+    delete [] addr;
+};
+
 vec_ele vec3D::operator[](int i) const{
     //if(i < 0 || i >= 3) exit(1);
     return addr[i];
@@ -58,7 +67,8 @@ vec_ele& vec3D::operator[](int i){
 };
 
 void vec3D::operator=(const vec3D& v){
-    for(int i = 0; i <= 2; i++) this->addr[i] = v.addr[i];
+    for(int i = 0; i <= 2; i++) 
+        this->addr[i] = v.addr[i];
 };
 
 void vec3D::operator()(vec_ele x, vec_ele y, vec_ele z){
@@ -67,13 +77,6 @@ void vec3D::operator()(vec_ele x, vec_ele y, vec_ele z){
     this->addr[2] = z;
 };
 
-void vec3D::operator()(vec_ele v[3]){
-
-};
-
-vec3D::~vec3D(){
-    delete [] addr;
-};
 
 void vec3D::print() const{
     cout << "\n(";
@@ -81,3 +84,18 @@ void vec3D::print() const{
     for(int i = 2; i <= 3; i++) cout << ", " << this -> addr[i-1];
     cout << ")\n";
 };
+
+vec3D vec3D::cross(const vec3D& v) const{
+    vec3D temp;
+    temp[0] = this->addr[1]*v[2] - this->addr[2]*v[1];
+    temp[1] = this->addr[2]*v[0] - this->addr[0]*v[2];
+    temp[2] = this->addr[0]*v[1] - this->addr[1]*v[0];    
+    return temp;
+};
+
+double vec3D::dot(const vec3D& v) const{
+    double temp = 0;
+    for(int i = 0; i <= 2; i++)
+        temp += addr[i]*v[i];
+    return temp;
+}
