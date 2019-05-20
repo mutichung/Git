@@ -40,7 +40,7 @@ int main(){
                                  0, -1, 0,
                                  1, 0, 0;
     t_62c.block<1, 1>(2, 3) << 206;
-    
+    t_02c = t_w20.inverse()*t_w2c;
     t_026 = t_w20.inverse()*t_w2c*t_62c.inverse();
 
     cout << t_026 << "\n\n";
@@ -53,3 +53,12 @@ double deg2rad(double deg){
     temp = deg/180.*M_PI;
     return temp;
 }
+
+/*
+    "rgba(209, 153, 110)",
+    "rgba(124, 186, 180)",
+    "rgba(163, 211, 101)",
+    "Gold",
+    "Orchid",
+    "LightSkyBlue"
+*/
