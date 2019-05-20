@@ -4,7 +4,7 @@ using namespace std;
 using namespace Eigen;
 //don't do a = a.transpose()
 
-double Deg2Rad(double deg);
+double deg2rad(double deg);
 
 int main(){
 
@@ -32,8 +32,8 @@ int main(){
 
     t_w2c = Matrix4d::Identity();
     t_w2c.block<3, 1>(0, 3) = p_w2c;
-    t_w2c(0, 0) = 0.5; t_w2c(0, 2) = -sin(Deg2Rad(60));
-    t_w2c(2, 0) = sin(Deg2Rad(60)); t_w2c(2, 2) = 0.5;
+    t_w2c(0, 0) = 0.5; t_w2c(0, 2) = -sin(deg2rad(60));
+    t_w2c(2, 0) = sin(deg2rad(60)); t_w2c(2, 2) = 0.5;
     
     t_62c = Matrix4d::Identity();
     t_62c.topLeftCorner(3, 3) << 0, 0, 1,
@@ -48,7 +48,7 @@ int main(){
     return 0;
 }
 
-double Deg2Rad(double deg){
+double deg2rad(double deg){
     double temp;
     temp = deg/180.*M_PI;
     return temp;
