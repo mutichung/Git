@@ -1,17 +1,15 @@
 #include <iostream>
 #include <Eigen/Dense>
 using namespace std;
-using Eigen::MatrixXd;
-
+using namespace Eigen;
+//don't do a = a.transpose()
 int main(){
-    MatrixXd m(2, 2), n(2, 1);
-    m(0, 0) = 2;
-    m(1, 0) = 0;
-    m(0, 1) = 0;
-    m(1, 1) = 2;
-    n(0, 0) = 3;
-    n(1, 0) = 1;
+    Matrix2d m(2, 2);
+    Vector2d n(2, 1);
+    m << 2, 0,
+         0, 2;
+    n << 3, 1;
     n = m*n;
-    cout << n << endl;
+    cout << "\nm*n = \n\n" << n.transpose() << endl;
     return 0;
 }
