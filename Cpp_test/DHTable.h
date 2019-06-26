@@ -29,9 +29,11 @@ DHTable::DHTable(unsigned int number_of_nodes){
     this->number_of_nodes = number_of_nodes;
     table = MatrixX4d::Zero(this->number_of_nodes, 4);
 };
+
 DHTable::~DHTable(){
     //TODO: remove memory allocate
 };
+
 MatrixX4d &DHTable::set_table(){ return table; };
 
 double DHTable::alpha(unsigned int i){  return table(i-1, 0); };
