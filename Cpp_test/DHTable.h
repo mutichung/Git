@@ -14,8 +14,10 @@ class DHTable{
     public:
         DHTable(unsigned int number_of_nodes);
         ~DHTable();
+        void operator=(const DHTable& input);
         MatrixX4d &set_table();
         unsigned int get_number_of_rows();
+        Vector3d get_translational();
         double alpha(unsigned int i), a(unsigned int i), d(unsigned int i), theta(unsigned int i);
         VectorXd alpha(), a(), d(), theta();
         double &set_alpha(unsigned int i), &set_a(unsigned int i), &set_d(unsigned int i), &set_theta(unsigned int i);
@@ -34,10 +36,18 @@ DHTable::DHTable(unsigned int number_of_nodes){
 DHTable::~DHTable(){
     //TODO: remove memory allocate
 };
-
+void DHTable::operator=(const DHTable& input){
+    this->table = input.table;
+    this->number_of_rows = input.number_of_rows;
+};
 MatrixX4d &DHTable::set_table(){ return table; };
 
 unsigned int DHTable::get_number_of_rows(){ return number_of_rows; };
+
+Vector3d DHTable::get_translational(){
+    return TfMat().block<3,1>(0,3);
+};
+
 
 double DHTable::alpha(unsigned int i){  return table(i-1, 0); };
 double DHTable::a(unsigned int i){  return table(i-1, 1); };
