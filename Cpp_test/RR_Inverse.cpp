@@ -4,6 +4,7 @@
 using namespace std;
 
 VectorXd IK_ana(Vector3d desired_pos, DHTable dh);
+VectorXd IK_num(Vector3d desired_pos, VectorXd cur_theta, DHTable dh);
 double rad2deg(double input);
 double deg2rad(double input);
 VectorXd rad2deg(VectorXd input);
@@ -75,7 +76,7 @@ VectorXd IK_ana(Vector3d desired_pos, DHTable dh){
         test.set_table().block<2,1>(0,3) = sol;
         //cout << test.get_translational() << endl;
         error = pow(x - test.get_translational()(0),2) + pow(y-test.get_translational()(1),2);
-        //error = 0;
+        cout << x << endl << test.get_translational()(0) << endl << y << endl << test.get_translational()(1) << endl;
         if( error < 0.0001 )    break;
     }
     //TODO: raise error if( error > 0.0001) 
@@ -83,9 +84,30 @@ VectorXd IK_ana(Vector3d desired_pos, DHTable dh){
     cout << "\nTime = " << double(stop - start) / CLOCKS_PER_SEC << " sec"<<endl;
     return sol;
 }
+
 double deg2rad(double input){ return input / 180 * M_PI; }
 double rad2deg(double input){ return input / M_PI * 180; }
 VectorXd rad2deg(VectorXd input){
     VectorXd temp(input.size());
     for(int i = 0; i < input.size(); i++)   temp(i) = input(i) / M_PI * 180;
-    return temp;    }
+    return temp;    
+}
+
+VectorXd IK_num(Vector3d desired_pos, VectorXd cur_theta, DHTable dh){
+    VectorXd sol = cur_theta;
+    bool done = false;
+    while (!done) {
+        //execute gradient descent
+    }
+
+    return sol;
+}
+
+double CostFunc(Vector3d desired_pos, Vector3d cur_pos, DHTable dh){
+    return 0;
+}
+
+Vector3d grad(Vector3d desired_pos, VectorXd cur_theta, DHTable dh){
+    dh.set_table().block<2,1>(0,3) = cur_theta;
+    return desired_pos;
+}

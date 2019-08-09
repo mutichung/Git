@@ -23,8 +23,8 @@ class DHTable{
         double &set_alpha(unsigned int i), &set_a(unsigned int i), &set_d(unsigned int i), &set_theta(unsigned int i);
         Vector3d &set_theta();
         void print_table() const;
-        Matrix4d TfMat();
         Matrix4d TfMat(unsigned int cur_frame, unsigned int ref_frame);
+        Matrix4d TfMat();
 };
 #endif
 
@@ -71,9 +71,10 @@ void DHTable::print_table() const{
     cout << "\n===DH Table===\n\n" << table << "\n\n==============\n\n";
 };
 
-Matrix4d DHTable::TfMat(){
+
+Matrix4d DHTable::TfMat(unsigned int ref_frame, unsigned int cur_frame = 0){
     Matrix4d temp, out = Matrix4d::Identity(4, 4);
-    for(int i = number_of_rows; i > 0; i--){
+    for(int i = cur_frame; i > ref_frame; i--){
         temp << cos(theta(i)), -sin(theta(i)), 0, a(i),
                 sin(theta(i))*cos(alpha(i)), cos(theta(i))*cos(alpha(i)), -sin(alpha(i)), -d(i)*sin(alpha(i)),
                 sin(theta(i))*sin(alpha(i)), cos(theta(i))*sin(alpha(i)), cos(alpha(i)), d(i)*cos(alpha(i)),
@@ -83,14 +84,14 @@ Matrix4d DHTable::TfMat(){
     return out;
 }
 
-Matrix4d DHTable::TfMat(unsigned int ref_frame, unsigned int cur_frame){
+Matrix4d DHTable::TfMat(){
     Matrix4d temp, out = Matrix4d::Identity(4, 4);
-    for(int i = cur_frame; i > ref_frame; i--){
+    for(int i = number_of_rows; i > 0; i--){
         temp << cos(theta(i)), -sin(theta(i)), 0, a(i),
                 sin(theta(i))*cos(alpha(i)), cos(theta(i))*cos(alpha(i)), -sin(alpha(i)), -d(i)*sin(alpha(i)),
                 sin(theta(i))*sin(alpha(i)), cos(theta(i))*sin(alpha(i)), cos(alpha(i)), d(i)*cos(alpha(i)),
                 0, 0, 0, 1;
-        out *= temp;
+        out = temp*out;
     }
     return out;
 }
